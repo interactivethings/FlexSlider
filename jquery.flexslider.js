@@ -19,7 +19,7 @@
       slider.vars = $.extend({}, $.flexslider.defaults, options);
       slider.data('flexslider', true);
       slider.container = $('.slides', slider);
-      slider.slides = $('.slides > li', slider);
+      slider.slides = $('.slides > .slide', slider);
       slider.count = slider.slides.length;
       slider.animating = false;
       slider.currentSlide = slider.vars.slideToStart;
@@ -59,7 +59,7 @@
         }
         slider.container.width(((slider.count + slider.cloneCount) * slider.width()) + 2000); //extra width to account for quirks
         //create newSlides to capture possible clones
-        slider.newSlides = $('.slides > li', slider);
+        slider.newSlides = $('.slides > .slide', slider);
         //Timeout function to give browser enough time to get proper width initially
         setTimeout(function() {
           slider.newSlides.width(slider.width()).css({"float": "left"}).show();
@@ -138,7 +138,7 @@
       
       //////////////////////////////////////////////////////////////////
       //FlexSlider: Keyboard Nav
-      if (slider.vars.keyboardNav && $('ul.slides').length == 1) {
+      if (slider.vars.keyboardNav && $('.slides').length == 1) {
         $(document).keyup(function(event) {
           if (slider.animating) {
             return;
@@ -425,8 +425,8 @@
   //FlexSlider: Plugin Function
   $.fn.flexslider = function(options) {
     return this.each(function() {
-      if ($(this).find('.slides li').length == 1) {
-        $(this).find('.slides li').fadeIn(400);
+      if ($(this).find('.slides > .slide').length == 1) {
+        $(this).find('.slides > .slide').fadeIn(400);
       }
       else if ($(this).data('flexslider') != true) {
         new $.flexslider($(this), options);

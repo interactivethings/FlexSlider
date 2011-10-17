@@ -17,7 +17,7 @@
 /* FlexSlider Necessary Styles
 *********************************/ 
 .flexslider {width: 100%; margin: 0; padding: 0;}
-.flexslider .slides > li {display: none;} /* Hide the slides before the JS is loaded. Avoids image jumping */
+.flexslider .slides > .slide {display: none;} /* Hide the slides before the JS is loaded. Avoids image jumping */
 .flexslider .slides img {max-width: 100%; display: block;}
 .flex-pauseplay span {text-transform: capitalize;}
 
@@ -29,14 +29,14 @@ html[xmlns] .slides {display: block;}
 /* No JavaScript Fallback */
 /* If you are not using another script, such as Modernizr, make sure you
  * include js that eliminates this class on page load */
-.no-js .slides > li:first-child {display: block;}
+.no-js .slides > .slide:first-child {display: block;}
 
 
 /* FlexSlider Default Theme
 *********************************/
 .flexslider {background: #fff; border: 4px solid #fff; position: relative; -webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px; border-radius: 5px; zoom: 1;}
 .flexslider .slides {zoom: 1;}
-.flexslider .slides > li {position: relative;}
+.flexslider .slides > .slide {position: relative;}
 /* Suggested container for "Slide" animation setups. Can replace this with your own, if you wish */
 .flex-container {zoom: 1; position: relative;}
 
