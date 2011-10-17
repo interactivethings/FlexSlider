@@ -300,7 +300,6 @@
           //FlexSlider: end() of cycle Callback
           slider.vars.end(slider);
         }
-        
         if (slider.vars.animation.toLowerCase() == "slide") {
 
           if (slider.currentSlide == 0 && target == slider.count - 1 && slider.vars.animationLoop && slider.direction != "next") {
@@ -310,6 +309,7 @@
           } else {
             slider.slideString = (-1 * (target + slider.cloneOffset)) * slider.slides.filter(':first').width() + "px";
           }
+          slider.alterHeight(target);
           slider.container.animate({"marginLeft": slider.slideString}, slider.vars.animationDuration, function(){
             //Jump the slider if necessary
             if (slider.currentSlide == 0 && target == slider.count - 1 && slider.vars.animationLoop) {
@@ -324,6 +324,7 @@
           });
         } else { //Default to Fade
           slider.slides.eq(slider.currentSlide).fadeOut(slider.vars.animationDuration);
+          slider.alterHeight(target);
           slider.slides.eq(target).fadeIn(slider.vars.animationDuration, function() {
             slider.animating = false;
             slider.currentSlide = target;
@@ -382,6 +383,12 @@
         return (slider.currentSlide == 0) ? slider.count - 1 : slider.currentSlide - 1;
       }
     }
+    
+    //FlexSlider: Animate slides to fit height
+    slider.alterHeight = function(target) {
+      panelHeight = slider.slides.eq(target).height();
+      slider.container.stop().animate({ "height": panelHeight }, slider.vars.animationDuration);
+    };
     
     //FlexSlider: Initialize
     slider.init();
