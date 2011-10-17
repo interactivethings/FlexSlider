@@ -23,7 +23,7 @@
       slider.count = slider.slides.length;
       slider.animating = false;
       slider.currentSlide = slider.vars.slideToStart;
-      slider.currentSlide = (location.hash) ? location.hash.substring(1, location.hash.length) : slider.vars.slideToStart;
+      slider.currentSlide = (location.hash) ? location.hash.slice(1) : slider.vars.slideToStart;
       slider.animatingTo = slider.currentSlide;
       slider.atEnd = (slider.currentSlide == 0) ? true : false;
       slider.eventType = ('ontouchstart' in document.documentElement) ? 'touchstart' : 'click';
