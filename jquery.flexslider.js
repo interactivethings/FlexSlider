@@ -106,7 +106,7 @@
       //////////////////////////////////////////////////////////////////
       //FlexSlider: Direction Nav
       if (slider.vars.directionNav) {
-        var directionNavScaffold = $('<ul class="flex-direction-nav"><li><a class="prev" href="#">' + slider.vars.prevText + '</a></li><li><a class="next" href="#">' + slider.vars.nextText + '</a></li></ul>');
+        var directionNavScaffold = $('<ul class="flex-direction-nav"><li><a class="prev" href="#" title="' + slider.vars.prevText + '">' + slider.vars.prevText + '</a></li><li><a class="next" href="#" title="' + slider.vars.nextText + '">' + slider.vars.nextText + '</a></li></ul>');
         
         if (slider.containerExists) {
           $(slider.controlsContainer).append(directionNavScaffold);
