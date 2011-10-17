@@ -79,7 +79,7 @@
           var controlNavScaffold = $('<ol class="flex-control-nav"></ol>');
           var j = 1;
           for (var i = 0; i < slider.count; i++) {
-            controlNavScaffold.append('<li><a>' + j + '</a></li>');
+            controlNavScaffold.append('<li><a href="#' + j + '">' + j + '</a></li>');
             j++;
           }
 
@@ -95,7 +95,7 @@
         slider.controlNav.eq(slider.currentSlide).addClass('active');
 
         slider.controlNav.bind(slider.eventType, function(event) {
-          event.preventDefault();
+          if (!slider.vars.crossLinking) { event.preventDefault(); };
           if (!$(this).hasClass('active')) {
             slider.flexAnimate(slider.controlNav.index($(this)), slider.vars.pauseOnAction);
           }
@@ -106,7 +106,9 @@
       //////////////////////////////////////////////////////////////////
       //FlexSlider: Direction Nav
       if (slider.vars.directionNav) {
-        var directionNavScaffold = $('<ul class="flex-direction-nav"><li><a class="prev" href="#" title="' + slider.vars.prevText + '">' + slider.vars.prevText + '</a></li><li><a class="next" href="#" title="' + slider.vars.nextText + '">' + slider.vars.nextText + '</a></li></ul>');
+        var nextLink = '<a class="next" href="#" title="' + slider.vars.nextText + '">' + slider.vars.nextText + '</a>';
+        var prevLink = '<a class="prev" href="#" title="' + slider.vars.prevText + '">' + slider.vars.prevText + '</a>';
+        var directionNavScaffold = $('<ul class="flex-direction-nav"><li>' + prevLink + '</li><li>' + nextLink + '</li></ul>');
         
         if (slider.containerExists) {
           $(slider.controlsContainer).append(directionNavScaffold);
@@ -126,7 +128,7 @@
         }
         
         slider.directionNav.bind(slider.eventType, function(event) {
-          event.preventDefault();
+          if (!slider.vars.crossLinking) { event.preventDefault(); };
           var target = ($(this).hasClass('next')) ? slider.getTarget('next') : slider.getTarget('prev');
           
           if (slider.canAdvance(target)) {
@@ -244,19 +246,19 @@
       
       //////////////////////////////////////////////////////////////////
       //FlexSlider: Resize Functions (If necessary)
-      if (slider.vars.animation.toLowerCase() == "slide") {
-        slider.sliderTimer;
-        $(window).resize(function(){
+      slider.sliderTimer;
+      $(window).resize(function(){
+        slider.container.css({ "height": "auto" });
+        if (slider.vars.animation.toLowerCase() == "slide") {
           slider.newSlides.width(slider.width());
           slider.container.width(((slider.count + slider.cloneCount) * slider.width()) + 2000); //extra width to account for quirks
-    
           //Slider resize reset
           clearTimeout(slider.sliderTimer);
           slider.sliderTimer = setTimeout(function(){
             slider.flexAnimate(slider.currentSlide);
           }, 300);
-        });
-      }
+        }
+      });
       //////////////////////////////////////////////////////////////////
       
       //FlexSlider: start() Callback
@@ -416,6 +418,7 @@
     pauseOnHover: false,            //Pause the slideshow when hovering over slider, then resume when no longer hovering (true/false)
     controlsContainer: "",          //Advanced property: Can declare which container the navigation elements should be appended too. Default container is the flexSlider element. Example use would be ".flexslider-container", "#container", etc. If the given element is not found, the default action will be taken.
     manualControls: "",             //Advanced property: Can declare custom control navigation. Example would be ".flex-control-nav" or "#tabs-nav", etc. The number of elements in your controlNav should match the number of slides/tabs (obviously).
+    crossLinking: true,             //Provide direct links to a specific slide
     start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide
     before: function(){},           //Callback: function(slider) - Fires asynchronously with each slider animation
     after: function(){},            //Callback: function(slider) - Fires after each slider animation completes
