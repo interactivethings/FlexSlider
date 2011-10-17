@@ -23,6 +23,7 @@
       slider.count = slider.slides.length;
       slider.animating = false;
       slider.currentSlide = slider.vars.slideToStart;
+      slider.currentSlide = (location.hash) ? location.hash.substring(1, location.hash.length) : slider.vars.slideToStart;
       slider.animatingTo = slider.currentSlide;
       slider.atEnd = (slider.currentSlide == 0) ? true : false;
       slider.eventType = ('ontouchstart' in document.documentElement) ? 'touchstart' : 'click';
@@ -95,7 +96,7 @@
         slider.controlNav.eq(slider.currentSlide).addClass('active');
 
         slider.controlNav.bind(slider.eventType, function(event) {
-          if (!slider.vars.crossLinking) { event.preventDefault(); };
+          event.preventDefault();
           if (!$(this).hasClass('active')) {
             slider.flexAnimate(slider.controlNav.index($(this)), slider.vars.pauseOnAction);
           }
@@ -128,9 +129,10 @@
         }
         
         slider.directionNav.bind(slider.eventType, function(event) {
-          if (!slider.vars.crossLinking) { event.preventDefault(); };
+          event.preventDefault();
           var target = ($(this).hasClass('next')) ? slider.getTarget('next') : slider.getTarget('prev');
-          
+          $('.next', directionNavScaffold).attr('href', '#' + (slider.getTarget('next')));
+          $('.prev', directionNavScaffold).attr('href', '#' + (slider.getTarget('prev')));
           if (slider.canAdvance(target)) {
             slider.flexAnimate(target, slider.vars.pauseOnAction);
           }
@@ -302,6 +304,7 @@
           //FlexSlider: end() of cycle Callback
           slider.vars.end(slider);
         }
+        
         if (slider.vars.animation.toLowerCase() == "slide") {
 
           if (slider.currentSlide == 0 && target == slider.count - 1 && slider.vars.animationLoop && slider.direction != "next") {
@@ -334,13 +337,15 @@
             slider.vars.after(slider);
           });
         }
+        if (slider.vars.crossLinking) { location.hash = target };
       }
     }
     
     //FlexSlider: Automatic Slideshow
     slider.animateSlides = function() {
       if (!slider.animating) {
-        var target = (slider.currentSlide == slider.count - 1) ? 0 : slider.currentSlide + 1;
+        console.log(slider.currentSlide);
+        var target = (slider.currentSlide == slider.count - 1) ? 0 : parseInt(slider.currentSlide) + 1;
         slider.flexAnimate(target);
       }
     }
@@ -418,7 +423,7 @@
     pauseOnHover: false,            //Pause the slideshow when hovering over slider, then resume when no longer hovering (true/false)
     controlsContainer: "",          //Advanced property: Can declare which container the navigation elements should be appended too. Default container is the flexSlider element. Example use would be ".flexslider-container", "#container", etc. If the given element is not found, the default action will be taken.
     manualControls: "",             //Advanced property: Can declare custom control navigation. Example would be ".flex-control-nav" or "#tabs-nav", etc. The number of elements in your controlNav should match the number of slides/tabs (obviously).
-    crossLinking: true,             //Provide direct links to a specific slide
+    crossLinking: true,             //Provide direct links to a specific slide / Experimental and probably only works with one slider per page
     start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide
     before: function(){},           //Callback: function(slider) - Fires asynchronously with each slider animation
     after: function(){},            //Callback: function(slider) - Fires after each slider animation completes
