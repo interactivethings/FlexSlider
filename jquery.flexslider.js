@@ -393,7 +393,7 @@
     
     //FlexSlider: Animate slides to fit height
     slider.alterHeight = function(target) {
-      panelHeight = slider.slides.eq(target).height();
+      panelHeight = slider.slides.eq(target).outerHeight();
       slider.container.stop().animate({ "height": panelHeight }, slider.vars.animationDuration);
     };
     
