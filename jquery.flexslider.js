@@ -385,9 +385,9 @@
     slider.getTarget = function(dir) {
       slider.direction = dir;
       if (dir == "next") {
-        return (slider.currentSlide == slider.count - 1) ? 0 : slider.currentSlide + 1;
+        return (slider.currentSlide == slider.count - 1) ? 0 : parseInt(slider.currentSlide) + 1;
       } else {
-        return (slider.currentSlide == 0) ? slider.count - 1 : slider.currentSlide - 1;
+        return (slider.currentSlide == 0) ? slider.count - 1 : parseInt(slider.currentSlide) - 1;
       }
     }
     
